@@ -2,7 +2,7 @@
 Author: Zhang-Linhui
 Date: 2024-09-23 06:53:09
 LastEditors: Zhang-Linhui
-LastEditTime: 2024-09-23 19:31:45
+LastEditTime: 2024-09-23 20:11:50
 '''
 '''
 Author: Zhang-Linhui
@@ -28,7 +28,7 @@ import os
 from datetime import datetime
 
 data = load_data()
-model_name = 'SGC'
+model_name = 'Transformer'
 
 def initialize_model(model_name, data):
     from model.gcn import GCN
@@ -38,6 +38,12 @@ def initialize_model(model_name, data):
     from model.sgc import SGC
     from model.gin import GIN
     from model.appnp import APPNPNet as APPNP
+    from model.mlp import MLP
+    from model.cnn import CNN
+    from model.rnn import RNN
+    from model.lstm import LSTM
+    from model.transformer_model import TransformerModel
+
     if model_name == 'GCN':
         return GCN(in_channels=data.num_features, out_channels=2)  # 2分类任务
     elif model_name == 'GraphSAGE':
@@ -52,6 +58,16 @@ def initialize_model(model_name, data):
         return GIN(in_channels=data.num_features, out_channels=2)  # 2分类任务
     elif model_name == 'APPNP':
         return APPNP(in_channels=data.num_features, out_channels=2)  # 2分类任务
+    elif model_name == 'MLP':
+        return MLP(in_channels=data.num_features, out_channels=2)  # 2分类任务
+    elif model_name == 'CNN':
+        return CNN(in_channels=1, out_channels=2)  # 假设输入是单通道图像
+    elif model_name == 'RNN':
+        return RNN(in_channels=data.num_features, hidden_size=64, num_layers=2, out_channels=2)  # 2分类任务
+    elif model_name == 'LSTM':
+        return LSTM(in_channels=data.num_features, hidden_size=64, num_layers=2, out_channels=2)  # 2分类任务
+    elif model_name == 'Transformer':
+        return TransformerModel(in_channels=data.num_features, num_heads=1, num_layers=2, out_channels=2)  # 2分类任务
     else:
         raise ValueError(f"Unknown model name: {model_name}")
 
